@@ -4,6 +4,7 @@ package army.helpful.persistha.resource;
 
 import army.helpful.persistha.actions.EnumActionTypes;
 import army.helpful.persistha.message.model.Content;
+import army.helpful.persistha.message.model.ContentMessage;
 import army.helpful.persistha.message.model.Title;
 import army.helpful.persistha.message.model.TitleMessage;
 import army.helpful.persistha.repository.ContentRepository;
@@ -49,34 +50,18 @@ public class TitleResource {
     }
 
     @GetMapping(value = "/contents/{name}/{amount}")
-    public List<Content> getContentsByTitle(@PathVariable String name, @PathVariable int amount) {
+    public ContentMessage getContentsByTitle(@PathVariable String name, @PathVariable int amount) {
         Pageable pageWithAmountofElements = PageRequest.of(amount/10, 10);
+
+        ContentMessage contentMessage= new ContentMessage();
+
         List<Content> contentList=  contentRepository.findByTitleWithAmount(name, pageWithAmountofElements);
-        return contentList;
+
+        contentMessage.setContentList(contentList);
+
+        return contentMessage;
     }
 
 
-    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public void createTitle(@RequestBody Content content) {
-
-        Title title= titleRepository.findByName(content.getTitle().getName());
-
-            String description="";
-
-            if(title==null){
-                title=content.getTitle();
-
-                title= titleRepository.save(title);
-                description="success";
-            }else{
-                description="title_exists";
-            }
-
-            content.setTitle(title);
-
-            content= contentRepository.save(content);
-
-
-    }
 
 }
