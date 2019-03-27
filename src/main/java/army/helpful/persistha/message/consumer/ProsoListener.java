@@ -3,8 +3,7 @@ package army.helpful.persistha.message.consumer;
 
 import army.helpful.persistha.actions.EnumActionStatus;
 import army.helpful.persistha.actions.EnumActionTypes;
-import army.helpful.persistha.message.model.Content;
-import army.helpful.persistha.message.model.Title;
+import army.helpful.persistha.message.model.*;
 import army.helpful.persistha.repository.ContentRepository;
 import army.helpful.persistha.repository.TitleRepository;
 import org.slf4j.Logger;
@@ -14,9 +13,12 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 
+import java.util.List;
 
 
 @EnableBinding({Processor.class})
@@ -55,14 +57,53 @@ public class ProsoListener
 
 
         //TODO: Websocket relation.
-     /*
-         Message resultMessage= MessageBuilder.withPayload(message.getPayload())
+
+         Message resultMessage= MessageBuilder.withPayload(content)
                 .setHeader( "action", EnumActionTypes.publishContent)
                 .setHeader( "actionStatus", EnumActionStatus.SUCCESS.name())
                 .build();
 
-        processor.output().send(resultMessage);*/
+        processor.output().send(resultMessage);
     }
+   /* TODO
+    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'getAllWithAmount'")
+    public void getAllWithAmount(Message<SearchCriterias> message) {
+        SearchCriterias searchCriterias= message.getPayload();
+        Pageable pageWithAmountofElements = PageRequest.of(0, searchCriterias.getAmount());
 
+        TitleMessage titleMessage= new TitleMessage();
+
+        titleMessage.setTitleList(titleRepository.getAllWithAmount(pageWithAmountofElements));
+
+
+        Message resultMessage= MessageBuilder.withPayload(titleMessage)
+                .setHeader( "action", EnumActionTypes.getAllWithAmount)
+                .setHeader( "actionStatus", EnumActionStatus.SUCCESS.name())
+                .build();
+
+        processor.output().send(resultMessage);
+
+    }
+    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'findByTitleWithAmount'")
+    public void findByTitleWithAmount(Message<SearchCriterias> message) {
+        SearchCriterias searchCriterias= message.getPayload();
+        Pageable pageWithAmountofElements = PageRequest.of(searchCriterias.getAmount()/10, 10);
+
+        ContentMessage contentMessage= new ContentMessage();
+
+        List<Content> contentList=  contentRepository.findByTitleWithAmount(searchCriterias.getName(), pageWithAmountofElements);
+
+        contentMessage.setContentList(contentList);
+
+        Message resultMessage= MessageBuilder.withPayload(contentMessage)
+                .setHeader( "action", EnumActionTypes.findByTitleWithAmount)
+                .setHeader( "actionStatus", EnumActionStatus.SUCCESS.name())
+                .build();
+
+        processor.output().send(resultMessage);
+
+
+    }
+    */
 
 }

@@ -10,7 +10,7 @@ public class Content extends BasicModel {
     @Column(name = "text")
     private String text;
     @JsonIgnoreProperties("contents")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "title_id")
     private Title title;
 

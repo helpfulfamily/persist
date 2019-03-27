@@ -12,6 +12,7 @@ import army.helpful.persistha.repository.TitleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class TitleResource {
     @Autowired
     ContentRepository contentRepository;
 
-    @GetMapping(value = "/all/{amount}")
+    @GetMapping(value = "/all/{amount}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public TitleMessage getAll(@PathVariable int amount) {
         Pageable pageWithAmountofElements = PageRequest.of(0, amount);
 

@@ -2,8 +2,9 @@ package army.helpful.persistha.actions;
 
 public enum EnumActionTypes {
 
-    publishContent("publish content");
-
+    publishContent("publish content"),
+    findByTitleWithAmount("find contents"),
+    getAllWithAmount("load title list");
 
     String description;
     EnumActionTypes(String description ){

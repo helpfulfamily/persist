@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Title extends BasicModel {
     @JsonIgnoreProperties("title")
-    @OneToMany(mappedBy = "title", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "title", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Content> contents = new ArrayList<>();
 
     public Title() {
