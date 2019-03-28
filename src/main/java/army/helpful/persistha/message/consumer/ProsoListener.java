@@ -37,18 +37,20 @@ public class ProsoListener
     @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'publishContent'")
     public void publishContent(Message<Content> message) {
 
+
         Content content= message.getPayload();
         Title title= titleRepository.findByName(content.getTitle().getName());
 
-        String description="";
+
 
         if(title==null){
             title=content.getTitle();
 
             title= titleRepository.save(title);
-            description="success";
+            content.setFirstContent(true);
+
         }else{
-            description="title_exists";
+            content.setFirstContent(false);
         }
 
         content.setTitle(title);
@@ -65,45 +67,6 @@ public class ProsoListener
 
         processor.output().send(resultMessage);
     }
-   /* TODO
-    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'getAllWithAmount'")
-    public void getAllWithAmount(Message<SearchCriterias> message) {
-        SearchCriterias searchCriterias= message.getPayload();
-        Pageable pageWithAmountofElements = PageRequest.of(0, searchCriterias.getAmount());
 
-        TitleMessage titleMessage= new TitleMessage();
-
-        titleMessage.setTitleList(titleRepository.getAllWithAmount(pageWithAmountofElements));
-
-
-        Message resultMessage= MessageBuilder.withPayload(titleMessage)
-                .setHeader( "action", EnumActionTypes.getAllWithAmount)
-                .setHeader( "actionStatus", EnumActionStatus.SUCCESS.name())
-                .build();
-
-        processor.output().send(resultMessage);
-
-    }
-    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'findByTitleWithAmount'")
-    public void findByTitleWithAmount(Message<SearchCriterias> message) {
-        SearchCriterias searchCriterias= message.getPayload();
-        Pageable pageWithAmountofElements = PageRequest.of(searchCriterias.getAmount()/10, 10);
-
-        ContentMessage contentMessage= new ContentMessage();
-
-        List<Content> contentList=  contentRepository.findByTitleWithAmount(searchCriterias.getName(), pageWithAmountofElements);
-
-        contentMessage.setContentList(contentList);
-
-        Message resultMessage= MessageBuilder.withPayload(contentMessage)
-                .setHeader( "action", EnumActionTypes.findByTitleWithAmount)
-                .setHeader( "actionStatus", EnumActionStatus.SUCCESS.name())
-                .build();
-
-        processor.output().send(resultMessage);
-
-
-    }
-    */
 
 }

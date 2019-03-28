@@ -15,6 +15,8 @@ public class Content extends BasicModel {
     private Title title;
 
 
+    private boolean firstContent;
+
     public Content() {
     }
 
@@ -34,8 +36,17 @@ public class Content extends BasicModel {
     public void setTitle(Title title) {
         this.title = title;
     }
+    public boolean isFirstContent() {
+        return firstContent;
+    }
+
+    public void setFirstContent(boolean firstContent) {
+        this.firstContent = firstContent;
+    }
+
 
     public String toString(){
      return   this.getClass().getSimpleName();
     }
+
 }
