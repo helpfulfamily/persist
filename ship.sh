@@ -7,7 +7,7 @@ build_local_project () {
                 echo ">>>>>>>>>>>>>>>>>>> BUILDING LOCAL PROJECT"
 
                 if [[ $app_name =~ "persist" ]]; then
-                                 mvn clean install
+                                 mvn clean install -Dspring.profiles.active=dev
                     else
                                  echo "App name does not contain 'persist'. Therefore exiting."
                                  exit 0
@@ -33,7 +33,7 @@ openshift_process_route(){
 
          oc create route edge --service=$app_name \
                               --insecure-policy='Redirect' \
-                              --port=8443-tcp
+                              --port=8444-tcp
 
 }
 
@@ -66,9 +66,9 @@ if [[ $app_name =~ "persist" ]]; then
         exit 1
     fi
 
-    oc delete configmap $app_name-config   -n helpfularmylego
-    oc create configmap $app_name-config  $GEN_CONFIG   -n helpfularmylego
-    oc label  configmap $app_name-config   app=$app_name -n helpfularmylego
+    oc delete configmap $app_name-config   -n helpfularmy
+    oc create configmap $app_name-config  $GEN_CONFIG   -n helpfularmy
+    oc label  configmap $app_name-config   app=$app_name -n helpfularmy
 
     echo ">>>>>>>>>>>>>>>>>>> OPENSHIFT: CREATE ENV VARIABLES "
     oc set env dc/$app_name --from configmap/$app_name-config
@@ -87,9 +87,9 @@ if [[ $app_name =~ "persist" ]]; then
         exit 1
     fi
 
-    oc delete secret $app_name-secret  -n helpfularmylego
-    oc create secret generic $app_name-secret  $GEN_SECRET   -n helpfularmylego
-    oc label  secret $app_name-secret   app=$app_name -n helpfularmylego
+    oc delete secret $app_name-secret  -n helpfularmy
+    oc create secret generic $app_name-secret  $GEN_SECRET   -n helpfularmy
+    oc label  secret $app_name-secret   app=$app_name -n helpfularmy
 
     echo ">>>>>>>>>>>>>>>>>>> OPENSHIFT: CREATE ENV VARIABLES using Secrets"
     oc set env dc/$app_name --from secret/$app_name-secret
@@ -99,7 +99,7 @@ fi
 if [[ -n "$app_name" ]]; then
         if [[ -n "$app_version" ]]; then
 
-            oc project helpfularmylego
+            oc project helpfularmy
 
             build_local_project
 
@@ -112,7 +112,7 @@ if [[ -n "$app_name" ]]; then
             create_project
 
             else
-                echo "Countinue without re-creating helpfularmylego project"
+                echo "Countinue without re-creating helpfularmy project"
             fi
 
 

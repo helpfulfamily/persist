@@ -29,6 +29,7 @@ public class ProsoListener
 
     @Autowired
     TitleRepository titleRepository;
+
     @Autowired
     ContentRepository contentRepository;
 
@@ -36,7 +37,7 @@ public class ProsoListener
 
     @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'publishContent'")
     public void publishContent(Message<Content> message) {
-
+        logger.info("publishContent:", message);
 
         Content content= message.getPayload();
         Title title= titleRepository.findByName(content.getTitle().getName());
