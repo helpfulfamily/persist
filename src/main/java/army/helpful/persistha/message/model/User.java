@@ -1,7 +1,11 @@
 package army.helpful.persistha.message.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User extends BasicModel {
@@ -9,17 +13,19 @@ public class User extends BasicModel {
     public String username;
     public String profilePhotoUrl;
 
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Content> contents = new ArrayList<>();
     public String toString(){
 
         return   this.getClass().getSimpleName();
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
+
     public void setUsername(String username) {
         this.username = username;
     }

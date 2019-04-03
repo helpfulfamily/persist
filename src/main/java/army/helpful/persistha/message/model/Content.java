@@ -14,6 +14,10 @@ public class Content extends BasicModel {
     @JoinColumn(name = "title_id")
     private Title title;
 
+    @JsonIgnoreProperties("contents")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private boolean firstContent;
 
@@ -49,4 +53,11 @@ public class Content extends BasicModel {
      return   this.getClass().getSimpleName();
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

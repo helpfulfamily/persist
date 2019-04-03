@@ -6,6 +6,7 @@ import army.helpful.persistha.actions.EnumActionTypes;
 import army.helpful.persistha.message.model.*;
 import army.helpful.persistha.repository.ContentRepository;
 import army.helpful.persistha.repository.TitleRepository;
+import army.helpful.persistha.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class ProsoListener
 
     @Autowired
     ContentRepository contentRepository;
+    @Autowired
+    UserRepository userRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ProsoListener.class);
 
@@ -69,5 +72,13 @@ public class ProsoListener
         processor.output().send(resultMessage);
     }
 
+    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'changeProfilePhotoUrl'")
+    public void changeProfilePhotoUrl(Message<User> message) {
+
+        User user= message.getPayload();
+        User userUpdate= userRepository.findByUsername(user.username);
+        userUpdate.setProfilePhotoUrl(user.getProfilePhotoUrl());
+        userRepository.save(userUpdate);
+    }
 
 }
