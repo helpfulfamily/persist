@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserResource {
 

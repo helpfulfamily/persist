@@ -6,22 +6,29 @@ import javax.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-public class Content extends BasicModel {
+public class SolutionContent extends BasicModel {
     @Column(name = "text")
     private String text;
-    @JsonIgnoreProperties("contents")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "title_id")
-    private Title title;
 
     @JsonIgnoreProperties("contents")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "problem_title_id")
+    private ProblemTitle problemTitle;
+
+    @JsonIgnoreProperties("solutionContents")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "solution_title_id")
+    private SolutionTitle solutionTitle;
+
+    @JsonIgnoreProperties("solutionContents")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
+
     private boolean firstContent;
 
-    public Content() {
+    public SolutionContent() {
     }
 
 
@@ -33,13 +40,14 @@ public class Content extends BasicModel {
         this.text = text;
     }
 
-    public Title getTitle() {
-        return title;
+    public SolutionTitle getSolutionTitle() {
+        return solutionTitle;
     }
 
-    public void setTitle(Title title) {
-        this.title = title;
+    public void setSolutionTitle(SolutionTitle solutionTitle) {
+        this.solutionTitle = solutionTitle;
     }
+
     public boolean isFirstContent() {
         return firstContent;
     }

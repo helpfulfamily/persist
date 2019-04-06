@@ -1,0 +1,14 @@
+package army.helpful.persistha.repository;
+
+
+import army.helpful.persistha.message.model.SolutionContent;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface SolutionContentRepository extends JpaRepository<SolutionContent, Integer> {
+    @Query("SELECT c FROM SolutionContent c WHERE c.solutionTitle.name = ?1 order by c.id DESC")
+    List<SolutionContent> findByTitleWithAmount(String title, Pageable pageable);
+}
