@@ -12,6 +12,6 @@ import java.util.List;
 public interface SolutionTitleRepository extends JpaRepository<SolutionTitle, Integer> {
     @Query("SELECT t FROM SolutionTitle t WHERE t.name = ?1")
     SolutionTitle findByName(String name);
-    @Query("SELECT s FROM SolutionTitle s ORDER BY s.id DESC")
+    @Query("SELECT s FROM SolutionTitle s ORDER BY s.currentThankAmount DESC")
     List<SolutionTitle> getAllWithAmount(Pageable pageable);
 }

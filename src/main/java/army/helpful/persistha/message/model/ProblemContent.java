@@ -1,13 +1,15 @@
 package army.helpful.persistha.message.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.ColumnDefault;
+
 
 import javax.persistence.*;
 
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-public class ProblemContent extends BasicModel {
+public class ProblemContent extends BasicModel  {
     @Column(name = "text")
     private String text;
 
@@ -24,6 +26,10 @@ public class ProblemContent extends BasicModel {
     private User user;
 
     private boolean firstContent;
+
+    @Column(nullable=false,columnDefinition="bigint(20) default 0")
+    Long currentThankAmount;
+
 
     public ProblemContent() {
     }
@@ -64,5 +70,13 @@ public class ProblemContent extends BasicModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getCurrentThankAmount() {
+        return currentThankAmount;
+    }
+
+    public void setCurrentThankAmount(Long currentThankAmount) {
+        this.currentThankAmount = currentThankAmount;
     }
 }

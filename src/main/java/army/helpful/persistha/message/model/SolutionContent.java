@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-public class SolutionContent extends BasicModel {
+public class SolutionContent extends BasicModel    {
     @Column(name = "text")
     private String text;
 
@@ -22,8 +22,12 @@ public class SolutionContent extends BasicModel {
 
     @JsonIgnoreProperties("solutionContents")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(referencedColumnName = "id")
     private User user;
+
+
+    @Column(nullable=false,columnDefinition="bigint(20) default 0")
+    Long currentThankAmount;
 
 
     private boolean firstContent;
@@ -67,5 +71,13 @@ public class SolutionContent extends BasicModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getCurrentThankAmount() {
+        return currentThankAmount;
+    }
+
+    public void setCurrentThankAmount(Long currentThankAmount) {
+        this.currentThankAmount = currentThankAmount;
     }
 }

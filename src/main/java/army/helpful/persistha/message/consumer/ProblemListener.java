@@ -2,10 +2,10 @@ package army.helpful.persistha.message.consumer;
 
 
 import army.helpful.persistha.actions.EnumActionStatus;
-import army.helpful.persistha.actions.EnumActionTypes;
+
 import army.helpful.persistha.message.model.ProblemContent;
 import army.helpful.persistha.message.model.ProblemTitle;
-import army.helpful.persistha.message.model.User;
+
 import army.helpful.persistha.repository.ProblemContentRepository;
 import army.helpful.persistha.repository.ProblemTitleRepository;
 import army.helpful.persistha.repository.UserRepository;
