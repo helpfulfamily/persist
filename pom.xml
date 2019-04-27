@@ -8,11 +8,11 @@
 		<version>2.2.0.M1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>army.helpful</groupId>
-	<artifactId>persistha</artifactId>
+	<groupId>family.helpful</groupId>
+	<artifactId>persist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>persistha</name>
-	<description>Demo project for Spring Boot</description>
+	<name>persist</name>
+	<description>Persistence Layer for Helpful Family</description>
 
 	<properties>
 		<java.version>1.8</java.version>
