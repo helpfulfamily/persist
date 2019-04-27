@@ -1,0 +1,79 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `startTransactionProcess`(
+ IN senderId INT,
+ IN receiverId INT,
+ IN objectId INT,
+ IN objectType VARCHAR(255),
+ IN name VARCHAR(255),
+ IN amount INT)
+BEGIN
+
+DECLARE transactionId INT DEFAULT 0;
+DECLARE lastThankAmountSender INT DEFAULT 0;
+DECLARE lastThankAmountReceiver INT DEFAULT 0;
+DECLARE lastThankAmountObject INT DEFAULT 0;
+
+ -- INSERT TRANSACTION
+ INSERT into transaction(create_date, object_id, object_type, name, sender_id, receiver_id, amount) values(NOW(),
+   objectId,
+   objectType,
+   name,
+   senderId,
+   receiverId,
+   amount);
+SELECT LAST_INSERT_ID() into transactionId;
+
+-- OBJECT INCREMENT
+
+  IF(objectType =  "ProblemContent") THEN
+
+		 UPDATE problem_content as pc SET
+			 pc.current_thank_amount = @lastThankAmountObject := pc.current_thank_amount+amount
+		WHERE pc.id=objectId;
+
+ ELSEIF(objectType =  "SolutionContent") THEN
+
+		 UPDATE solution_content as pc SET
+			 pc.current_thank_amount = @lastThankAmountObject := pc.current_thank_amount+amount
+		WHERE pc.id=objectId;
+
+ ELSEIF(objectType =  "ProblemTitle") THEN
+
+		 UPDATE problem_title as pc SET
+			 pc.current_thank_amount = @lastThankAmountObject := pc.current_thank_amount+amount
+		WHERE pc.id=objectId;
+
+ ELSEIF(objectType =  "SolutionTitle") THEN
+
+		 UPDATE solution_title as pc SET
+			 pc.current_thank_amount = @lastThankAmountObject := pc.current_thank_amount+amount
+		WHERE pc.id=objectId;
+
+ END IF;
+
+
+ SELECT @lastThankAmountObject into lastThankAmountObject;
+
+-- SENDER DECREMENT
+ UPDATE user as sender SET
+     sender.current_thank_amount = @lastThankAmountSender := sender.current_thank_amount-amount
+WHERE sender.id=senderId;
+
+ SELECT @lastThankAmountSender into lastThankAmountSender;
+
+ -- RECEIVER INCREMENT
+ UPDATE user as receiver SET
+     receiver.current_thank_amount = @lastThankAmountReceiver := receiver.current_thank_amount+amount
+ WHERE receiver.id=receiverId;
+
+ SELECT @lastThankAmountReceiver into lastThankAmountReceiver;
+
+  -- UPDATE transaction
+ UPDATE transaction as tx  SET
+			   tx.status="SUCCESS",
+               tx.last_thank_amount_sender= lastThankAmountSender,
+               tx.last_thank_amount_receiver= lastThankAmountReceiver,
+			   tx.last_thank_amount_object= lastThankAmountObject
+			   WHERE tx.id= transactionId;
+
+ SELECT * from Transaction as tx WHERE tx.id= transactionId;
+END
