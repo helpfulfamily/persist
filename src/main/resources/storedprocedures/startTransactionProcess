@@ -75,5 +75,5 @@ WHERE sender.id=senderId;
 			   tx.last_thank_amount_object= lastThankAmountObject
 			   WHERE tx.id= transactionId;
 
- SELECT * from Transaction as tx WHERE tx.id= transactionId;
+ SELECT * from transaction as tx WHERE tx.id= transactionId;
 END

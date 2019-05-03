@@ -21,6 +21,16 @@ public class SolutionTitle extends  BasicModel {
     @Column(columnDefinition="bigint(20) default 0")
     Long currentThankAmount;
 
+    @ManyToMany(cascade = {
+            CascadeType.REFRESH
+
+    })
+    @JoinTable(name = "st_tag",
+            joinColumns = @JoinColumn(name = "st_id"),
+            inverseJoinColumns = @JoinColumn(name = "channel_id")
+    )
+    private List<Channel> channels = new ArrayList<>();
+
     public Long getCurrentThankAmount() {
         return currentThankAmount;
     }
@@ -35,5 +45,13 @@ public class SolutionTitle extends  BasicModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Channel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(List<Channel> channels) {
+        this.channels = channels;
     }
 }

@@ -2,6 +2,8 @@ package family.helpful.persist.message.consumer;
 
 
 import family.helpful.persist.actions.EnumActionStatus;
+import family.helpful.persist.message.ChannelUtil;
+import family.helpful.persist.message.model.Channel;
 import family.helpful.persist.message.model.SolutionContent;
 import family.helpful.persist.message.model.SolutionTitle;
 import family.helpful.persist.message.model.User;
@@ -18,6 +20,8 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 
+import java.util.List;
+
 
 @EnableBinding({Processor.class})
 public class SolutionListener
@@ -32,6 +36,9 @@ public class SolutionListener
     SolutionContentRepository solutionContentRepository;
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ChannelUtil channelUtil;
 
     private static final Logger logger = LoggerFactory.getLogger(SolutionListener.class);
 
@@ -48,16 +55,21 @@ public class SolutionListener
 
         solutionContent.setCurrentThankAmount(0L);
 
+        List<Channel> listChannel=  channelUtil.saveAll(solutionContent.getSolutionTitle().getChannels());
+
+
 
         if(title==null){
 
             title=solutionContent.getSolutionTitle();
+            title.setChannels(listChannel);
             title.setUser(solutionContent.getUser());
             title.setCurrentThankAmount(0L);
             title= solutionTitleRepository.save(title);
             solutionContent.setFirstContent(true);
 
         }else{
+            title.setChannels(listChannel);
             solutionContent.setFirstContent(false);
         }
 

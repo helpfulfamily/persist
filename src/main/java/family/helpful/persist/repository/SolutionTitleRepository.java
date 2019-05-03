@@ -14,4 +14,6 @@ public interface SolutionTitleRepository extends JpaRepository<SolutionTitle, In
     SolutionTitle findByName(String name);
     @Query("SELECT s FROM SolutionTitle s ORDER BY s.currentThankAmount DESC")
     List<SolutionTitle> getAllWithAmount(Pageable pageable);
+    @Query("SELECT s FROM SolutionTitle s  where ?1 = ANY (Select channels.name FROM s.channels channels)  ORDER BY s.currentThankAmount DESC")
+    List<SolutionTitle> getAllWithAmountAndChannel(Pageable pageable, String channel);
 }

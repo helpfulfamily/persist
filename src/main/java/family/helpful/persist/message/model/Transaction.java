@@ -2,12 +2,10 @@ package family.helpful.persist.message.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "transaction")
 public class Transaction extends BasicModel{
 
     @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",

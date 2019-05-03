@@ -3,10 +3,13 @@ package family.helpful.persist.message.consumer;
 
 import family.helpful.persist.actions.EnumActionStatus;
 
+import family.helpful.persist.message.ChannelUtil;
+import family.helpful.persist.message.model.Channel;
 import family.helpful.persist.message.model.ProblemContent;
 import family.helpful.persist.message.model.ProblemTitle;
 
 import family.helpful.persist.message.model.User;
+import family.helpful.persist.repository.ChannelRepository;
 import family.helpful.persist.repository.ProblemContentRepository;
 import family.helpful.persist.repository.ProblemTitleRepository;
 import family.helpful.persist.repository.UserRepository;
@@ -19,6 +22,11 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
+import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 @EnableBinding({Processor.class})
@@ -30,10 +38,15 @@ public class ProblemListener
     @Autowired
     ProblemTitleRepository problemTitleRepository;
 
+
     @Autowired
     ProblemContentRepository problemContentRepository;
+
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ChannelUtil channelUtil;
 
     private static final Logger logger = LoggerFactory.getLogger(ProblemListener.class);
 
@@ -53,15 +66,19 @@ public class ProblemListener
 
         problemContent.setCurrentThankAmount(0L);
 
+        List<Channel> listChannel=  channelUtil.saveAll(problemContent.getProblemTitle().getChannels());
+
         if(title==null){
 
             title=problemContent.getProblemTitle();
+            title.setChannels(listChannel);
             title.setCurrentThankAmount(0L);
             title.setUser(problemContent.getUser());
             title= problemTitleRepository.save(title);
             problemContent.setFirstContent(true);
 
         }else{
+            title.setChannels(listChannel);
             problemContent.setFirstContent(false);
         }
 
