@@ -23,6 +23,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 
 @EnableBinding({Processor.class})
@@ -48,7 +49,7 @@ public class TransactionListener
     @PersistenceContext
     private EntityManager em;
 
-
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = { Exception.class })
     @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'sendThankCoin'")
     public void sendThankCoin(Message<Transaction> message) {
 

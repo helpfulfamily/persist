@@ -41,6 +41,17 @@ public class User extends BasicModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SolutionTitle> solutionTitles = new ArrayList<>();
 
+
+    @ManyToMany(cascade = {
+            CascadeType.REFRESH
+
+    })
+    @JoinTable(name = "ob_channel",
+            joinColumns = @JoinColumn(name = "ob_id"),
+            inverseJoinColumns = @JoinColumn(name = "channel_id")
+    )
+    private List<Channel> channels = new ArrayList<>();
+
    public String toString(){
 
         return   this.getClass().getSimpleName();
