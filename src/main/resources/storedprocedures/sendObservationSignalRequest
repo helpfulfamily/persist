@@ -1,0 +1,17 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sendObservationRequestSignal`(
+ IN observerUserId INT,
+ IN channelId INT,
+ OUT lastObserverAmountChannel INT)
+BEGIN
+ -- SET RELATIONSHIP BETWEEN USER AND CHANNEL
+ INSERT ignore into ob_channel(ob_id, channel_id) values (observerUserId, channelId);
+
+ -- OBSERVER INCREMENT FOR CHANNEL
+
+ UPDATE channel as ch SET
+     ch.current_observer_amount = @lastObserverAmountChannel := ch.current_observer_amount+1
+ WHERE ch.id=channelId;
+
+
+ SELECT @lastObserverAmountChannel into lastObserverAmountChannel;
+END
