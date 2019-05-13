@@ -18,7 +18,7 @@ public class SolutionTitle extends  BasicModel {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(columnDefinition="bigint(20) default 0")
+    @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentThankAmount;
 
     @ManyToMany(cascade = {

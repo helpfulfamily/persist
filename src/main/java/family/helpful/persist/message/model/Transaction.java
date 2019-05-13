@@ -9,13 +9,13 @@ import javax.persistence.*;
 public class Transaction extends BasicModel{
 
     @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
-            "problemContents", "solutionContents", "problemTitles", "solutionTitles"})
+            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
     private User sender;
 
     @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
-            "problemContents", "solutionContents", "problemTitles", "solutionTitles"})
+            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
     private User receiver;

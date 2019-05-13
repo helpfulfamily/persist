@@ -1,20 +1,22 @@
 package family.helpful.persist.message.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Channel extends BasicModel {
-    @Column(columnDefinition="bigint(20) default 0")
+    @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentThankAmount;
 
-    @Column(columnDefinition="bigint(20) default 0")
+    @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentObserverAmount;
 
-    @ManyToMany(mappedBy = "channels")
+    @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
+            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})
+    @ManyToMany(mappedBy = "channels", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private List<ProblemTitle> problemTitles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "channels")

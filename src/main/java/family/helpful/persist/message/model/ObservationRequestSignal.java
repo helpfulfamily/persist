@@ -1,10 +1,10 @@
 package family.helpful.persist.message.model;
 
-
 public class ObservationRequestSignal {
     Long observerUserId;
     String observerUsername;
     Long channelId;
+    String channelName;
     Long currentObserverAmount;
     String objectType;
 
@@ -46,5 +46,13 @@ public class ObservationRequestSignal {
 
     public void setObserverUsername(String observerUsername) {
         this.observerUsername = observerUsername;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 }

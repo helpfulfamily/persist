@@ -18,13 +18,13 @@ public class ProblemTitle extends BasicModel {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(columnDefinition="bigint(20) default 0")
+    @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentThankAmount;
 
     @ManyToMany(cascade = {
             CascadeType.REFRESH
 
-    })
+    }, fetch = FetchType.LAZY)
     @JoinTable(name = "pt_tag",
             joinColumns = @JoinColumn(name = "pt_id"),
             inverseJoinColumns = @JoinColumn(name = "channel_id")

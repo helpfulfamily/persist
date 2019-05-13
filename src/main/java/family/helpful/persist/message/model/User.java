@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User extends BasicModel {
+public class  User extends BasicModel {
 
     public String username;
     public String profilePhotoUrl;
     public String coverUrl;
 
-    @Column(columnDefinition="bigint(20) default 0")
+    @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentThankAmount;
 
     @JsonIgnoreProperties("sender")
@@ -33,8 +33,8 @@ public class User extends BasicModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SolutionContent> solutionContents = new ArrayList<>();
 
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
+            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProblemTitle> problemTitles = new ArrayList<>();
 
     @JsonIgnoreProperties("user")
@@ -42,10 +42,19 @@ public class User extends BasicModel {
     private List<SolutionTitle> solutionTitles = new ArrayList<>();
 
 
+    public List<Channel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(List<Channel> channels) {
+        this.channels = channels;
+    }
+
     @ManyToMany(cascade = {
             CascadeType.REFRESH
 
-    })
+
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "ob_channel",
             joinColumns = @JoinColumn(name = "ob_id"),
             inverseJoinColumns = @JoinColumn(name = "channel_id")

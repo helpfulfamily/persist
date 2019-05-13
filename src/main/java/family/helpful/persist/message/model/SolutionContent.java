@@ -21,13 +21,13 @@ public class SolutionContent extends BasicModel    {
     private SolutionTitle solutionTitle;
 
     @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
-            "problemContents", "solutionContents", "problemTitles", "solutionTitles"})
+            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
     private User user;
 
 
-    @Column(columnDefinition="bigint(20) default 0")
+    @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentThankAmount;
 
 

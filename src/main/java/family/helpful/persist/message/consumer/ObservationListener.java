@@ -55,7 +55,7 @@ public class ObservationListener
 
         Long channelId= observationRequestSignal.getChannelId();
 
-
+        observationRequestSignal.setObserverUserId(observerUserId);
 
         StoredProcedureQuery query = this.em.createStoredProcedureQuery("sendObservationRequestSignal");
 

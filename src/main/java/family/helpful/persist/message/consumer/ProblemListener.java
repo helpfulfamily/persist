@@ -2,14 +2,11 @@ package family.helpful.persist.message.consumer;
 
 
 import family.helpful.persist.actions.EnumActionStatus;
-
 import family.helpful.persist.message.ChannelUtil;
 import family.helpful.persist.message.model.Channel;
 import family.helpful.persist.message.model.ProblemContent;
 import family.helpful.persist.message.model.ProblemTitle;
-
 import family.helpful.persist.message.model.User;
-import family.helpful.persist.repository.ChannelRepository;
 import family.helpful.persist.repository.ProblemContentRepository;
 import family.helpful.persist.repository.ProblemTitleRepository;
 import family.helpful.persist.repository.UserRepository;
@@ -22,10 +19,7 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
-import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
