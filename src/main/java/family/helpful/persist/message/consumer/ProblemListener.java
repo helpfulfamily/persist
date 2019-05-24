@@ -65,6 +65,11 @@ public class ProblemListener
         if(title==null){
 
             title=problemContent.getProblemTitle();
+            logger.info("'"+ problemContent.getProblemTitle().getName()+"' is a new title");
+            if(listChannel!=null){
+                int size=  listChannel.size();
+                logger.info(size +" new channel is related to title");
+            }
             title.setChannels(listChannel);
             title.setCurrentThankAmount(0L);
             title.setUser(problemContent.getUser());
@@ -72,8 +77,12 @@ public class ProblemListener
             problemContent.setFirstContent(true);
 
         }else{
-            title.setChannels(listChannel);
-            problemContent.setFirstContent(false);
+             if(listChannel!=null){
+                 int size=  listChannel.size();
+                 logger.info(size +" new channel is related to title");
+             }
+             title.setChannels(listChannel);
+             problemContent.setFirstContent(false);
         }
 
         problemContent.setProblemTitle(title);

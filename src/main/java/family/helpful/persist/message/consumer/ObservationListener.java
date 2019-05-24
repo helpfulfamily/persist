@@ -58,15 +58,22 @@ public class ObservationListener
         observationRequestSignal.setObserverUserId(observerUserId);
 
         StoredProcedureQuery query = this.em.createStoredProcedureQuery("sendObservationRequestSignal");
-
         query.registerStoredProcedureParameter("observerUserId", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("channelId", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("amount", Long.class, ParameterMode.IN);
+
         query.registerStoredProcedureParameter("lastObserverAmountChannel", Long.class, ParameterMode.OUT);
+
 
         query.setParameter("observerUserId",  observerUserId);
         query.setParameter("channelId", channelId);
+        if (observationRequestSignal.isObserve()){
+            query.setParameter("amount", 1L);
 
+        }else{
+            query.setParameter("amount", -1L);
 
+        }
         Long lastObserverAmountChannel= (Long) query.getOutputParameterValue("lastObserverAmountChannel");
         observationRequestSignal.setCurrentObserverAmount(lastObserverAmountChannel);
    //     transactionRepository.save(transaction);

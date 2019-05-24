@@ -1,0 +1,6 @@
+SET NAMES utf8mb4;
+ALTER DATABASE dbserviceha CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+ALTER TABLE problem_content CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE problem_title CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE solution_content CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE solution_title CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
