@@ -2,15 +2,19 @@ package family.helpful.persist.resource;
 
 
 
-import family.helpful.persist.message.model.Channel;
-import family.helpful.persist.message.model.ChannelMessage;
- import family.helpful.persist.repository.ChannelRepository;
+import family.helpful.persist.message.model.*;
+import family.helpful.persist.repository.ChannelContentRepository;
+import family.helpful.persist.repository.ChannelRepository;
 import family.helpful.persist.repository.ProblemContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 
 @RestController
@@ -20,8 +24,9 @@ public class ChannelResource {
 
     @Autowired
     ChannelRepository channelRepository;
+
     @Autowired
-    ProblemContentRepository problemContentRepository;
+    ChannelContentRepository channelContentRepository;
 
     @GetMapping(value = "/all/{amount}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ChannelMessage getAll(@PathVariable int amount) {
@@ -38,5 +43,24 @@ public class ChannelResource {
         Channel channel = (Channel) channelRepository.findByName(channelName);
         return channel;
     }
+    @GetMapping(value = "/contents/{name}/{amount}")
+    public ChannelContentMessage getContentsByTitle(@PathVariable String name, @PathVariable int amount) {
+        Pageable pageWithAmountofElements = PageRequest.of(amount/10, 10);
+
+        ChannelContentMessage contentMessage= new ChannelContentMessage();
+        try {
+            name = java.net.URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            // not going to happen - value came from JDK's own StandardCharsets
+        }
+
+
+        List<ChannelContent> contentList=  channelContentRepository.findByTitleWithAmount(name, pageWithAmountofElements);
+
+        contentMessage.setContents(contentList);
+
+        return contentMessage;
+    }
+
 
 }

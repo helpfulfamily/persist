@@ -2,25 +2,23 @@ package family.helpful.persist.message.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 import javax.persistence.*;
 
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-public class ProblemContent extends BasicModel  {
+public class ChannelContent extends BasicModel  {
     @Column(name = "text")
     private String text;
 
 
-    @JsonIgnoreProperties("problemContents")
+    @JsonIgnoreProperties({"channelContents","problemTitles" })
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "problem_title_id")
-    private ProblemTitle problemTitle;
+    @JoinColumn(name = "channel_id")
+    private Channel channel;
 
 
-    @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
-            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
@@ -31,7 +29,7 @@ public class ProblemContent extends BasicModel  {
     Long currentThankAmount;
 
 
-    public ProblemContent() {
+    public ChannelContent() {
     }
 
 
@@ -43,12 +41,12 @@ public class ProblemContent extends BasicModel  {
         this.text = text;
     }
 
-    public ProblemTitle getProblemTitle() {
-        return problemTitle;
+    public Channel getChannel() {
+        return channel;
     }
 
-    public void setProblemTitle(ProblemTitle problemTitle) {
-        this.problemTitle = problemTitle;
+    public void setChannel(Channel channel) {
+        this.channel = channel;
     }
 
     public boolean isFirstContent() {
