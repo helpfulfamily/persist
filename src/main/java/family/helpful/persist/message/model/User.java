@@ -34,13 +34,21 @@ public class  User extends BasicModel {
     private List<SolutionContent> solutionContents = new ArrayList<>();
 
     @JsonIgnoreProperties( {"sentTransactions","receivedTransactions",
-            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+            "problemContents", "solutionContents", "problemTitles", "solutionTitles", "channels"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProblemTitle> problemTitles = new ArrayList<>();
 
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SolutionTitle> solutionTitles = new ArrayList<>();
 
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Family> families = new ArrayList<>();
+
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Channel> ownedChannels = new ArrayList<>();
 
     public List<Channel> getChannels() {
         return channels;
@@ -65,7 +73,13 @@ public class  User extends BasicModel {
 
         return   this.getClass().getSimpleName();
     }
+    public List<Family> getFamilies() {
+        return families;
+    }
 
+    public void setFamilies(List<Family> families) {
+        this.families = families;
+    }
     public String getUsername() {
         return username;
     }

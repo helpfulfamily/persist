@@ -11,7 +11,7 @@ BEGIN
  ELSEIF(amount = -1) THEN
 -- DELETE RELATIONSHIP BETWEEN USER AND CHANNEL
 
- DELETE FROM ob_channel where ob_id=observerUserId;
+ DELETE FROM ob_channel where ob_id=observerUserId and channel_id=channelId;
 
  END IF;
  -- OBSERVER INCREMENT FOR CHANNEL
