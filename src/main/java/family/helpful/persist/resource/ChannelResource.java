@@ -43,9 +43,9 @@ public class ChannelResource {
         Channel channel = (Channel) channelRepository.findByName(channelName);
         return channel;
     }
-    @GetMapping(value = "/contents/{name}/{amount}")
-    public ChannelContentMessage getContentsByTitle(@PathVariable String name, @PathVariable int amount) {
-        Pageable pageWithAmountofElements = PageRequest.of(amount/10, 10);
+    @GetMapping(value = "/contents/{name}/{pageNumber}")
+    public ChannelContentMessage getContentsByTitle(@PathVariable String name, @PathVariable int pageNumber) {
+        Pageable pageWithAmountofElements = PageRequest.of(pageNumber, 10);
 
         ChannelContentMessage contentMessage= new ChannelContentMessage();
         try {
