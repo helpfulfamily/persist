@@ -40,7 +40,7 @@ public class ChannelResource {
     }
     @GetMapping(value = "/{channelName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Channel getChannel(@PathVariable String channelName) {
-        Channel channel = (Channel) channelRepository.findByName(channelName);
+        Channel channel = channelRepository.findByName(channelName);
         return channel;
     }
     @GetMapping(value = "/contents/{name}/{pageNumber}")
