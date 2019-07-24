@@ -1,25 +1,25 @@
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sendObservationRequestSignal`(
- IN observerUserId INT,
- IN channelId INT,
- IN amount INT,
- OUT lastObserverAmountChannel INT)
-BEGIN
-  IF(amount = 1) THEN
- -- SET RELATIONSHIP BETWEEN USER AND CHANNEL
- INSERT ignore into ob_channel(ob_id, channel_id) values (observerUserId, channelId);
+    IN observerUserId INT,
+    IN channelId INT,
+    IN amount INT,
+    OUT lastObserverAmountChannel INT)
+   BEGIN
+     IF(amount = 1) THEN
+    -- SET RELATIONSHIP BETWEEN USER AND CHANNEL
+    INSERT ignore into ob_channel(ob_id, channel_id) values (observerUserId, channelId);
 
- ELSEIF(amount = -1) THEN
--- DELETE RELATIONSHIP BETWEEN USER AND CHANNEL
+    ELSEIF(amount = -1) THEN
+   -- DELETE RELATIONSHIP BETWEEN USER AND CHANNEL
 
- DELETE FROM ob_channel where ob_id=observerUserId and channel_id=channelId;
+    DELETE FROM ob_channel where ob_id=observerUserId and channel_id=channelId;
 
- END IF;
- -- OBSERVER INCREMENT FOR CHANNEL
+    END IF;
+    -- OBSERVER INCREMENT FOR CHANNEL
 
- UPDATE channel as ch SET
-     ch.current_observer_amount = @lastObserverAmountChannel := ch.current_observer_amount+amount
- WHERE ch.id=channelId;
+    UPDATE channel as ch SET
+        ch.current_observer_amount = @lastObserverAmountChannel := ch.current_observer_amount+amount
+    WHERE ch.id=channelId;
 
 
- SELECT @lastObserverAmountChannel into lastObserverAmountChannel;
-END
+    SELECT @lastObserverAmountChannel into lastObserverAmountChannel;
+   END
