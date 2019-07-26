@@ -26,13 +26,13 @@ public class OnlineUserListener
 
     private static final Logger logger = LoggerFactory.getLogger(OnlineUserListener.class);
 
-    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'userLoggedIn'")
-    public void userLoggedIn(Message<UserJoinMessage> userJoinMessageMessage) {
-        logger.info("userLoggedIn:", userJoinMessageMessage.getPayload().getUser().username);
+    @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'userChannelJoinPart'")
+    public void userChannelJoinPart(Message<UserJoinMessage> userJoinMessageMessage) {
+        logger.info("userChannelJoinPart:", userJoinMessageMessage.getPayload().getUser().username);
 
 
          Message resultMessage= MessageBuilder.withPayload(userJoinMessageMessage.getPayload())
-                .setHeader( "action", "userLoggedIn")
+                .setHeader( "action", "userChannelJoinPart")
                 .setHeader( "actionStatus", EnumActionStatus.SUCCESS.name())
                 .build();
 
