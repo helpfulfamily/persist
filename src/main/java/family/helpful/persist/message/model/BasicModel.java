@@ -1,11 +1,13 @@
 package family.helpful.persist.message.model;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class BasicModel {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -14,9 +16,10 @@ public class BasicModel {
     @Column(name = "name")
     private String name;
 
-    @CreationTimestamp
+    @Column(name = "create_date", columnDefinition =  "TIMESTAMP (6)")
+    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
+
     private Date createDate;
 
     public Long getId() {
