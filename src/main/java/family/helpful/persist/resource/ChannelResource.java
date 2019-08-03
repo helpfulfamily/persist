@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -57,6 +58,9 @@ public class ChannelResource {
 
         List<ChannelContent> contentList=  channelContentRepository.findByTitleWithAmount(name, pageWithAmountofElements);
 
+        if(contentList!=null){
+                Collections.reverse(contentList);
+         }
         contentMessage.setContents(contentList);
 
         return contentMessage;

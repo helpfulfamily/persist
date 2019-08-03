@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Channel extends BasicModel {
     @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentThankAmount;
@@ -14,7 +15,7 @@ public class Channel extends BasicModel {
     @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentObserverAmount;
 
-    @JsonIgnoreProperties({"ownedChannels","channels"})
+    @JsonIgnoreProperties({"ownedChannels","channels","receivedTransactions","problemContents" })
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

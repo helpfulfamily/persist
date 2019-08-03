@@ -88,7 +88,7 @@ public class ChannelListener
 
     @StreamListener(target = Sink.INPUT,  condition = "headers['action'] == 'createChannel'")
     public void createChannel(Message<Channel> familyObjectMessage) {
-        logger.info("createChannel:", familyObjectMessage);
+        logger.info("createChannel:", familyObjectMessage.getPayload().getName());
 
         Channel channelObject= familyObjectMessage.getPayload();
         User user= channelObject.getUser();

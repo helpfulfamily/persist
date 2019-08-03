@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ChannelContentRepository extends JpaRepository<ChannelContent, Integer> {
-    @Query("SELECT c FROM ChannelContent c WHERE c.channel.name = ?1 order by c.currentThankAmount DESC")
+    @Query("SELECT c FROM ChannelContent c WHERE c.channel.name = ?1 order by c.createDate DESC")
     List<ChannelContent> findByTitleWithAmount(String title, Pageable pageable);
 }
