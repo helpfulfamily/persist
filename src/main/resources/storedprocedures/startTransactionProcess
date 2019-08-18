@@ -20,7 +20,6 @@ DECLARE lastThankAmountObject INT DEFAULT 0;
    senderId,
    receiverId,
    amount);
-
 SELECT LAST_INSERT_ID() into transactionId;
 
 -- OBJECT INCREMENT
@@ -48,11 +47,13 @@ SELECT LAST_INSERT_ID() into transactionId;
 		 UPDATE solution_title as pc SET
 			 pc.current_thank_amount = @lastThankAmountObject := pc.current_thank_amount+amount
 		WHERE pc.id=objectId;
+
 ELSEIF(objectType =  "Channel") THEN
 
-		 UPDATE channel as pc SET
-			 pc.current_thank_amount = @lastThankAmountObject := pc.current_thank_amount+amount
-		WHERE pc.id=objectId;
+		 UPDATE channel as ch SET
+			 ch.current_thank_amount = @lastThankAmountObject := ch.current_thank_amount+amount
+		WHERE ch.id=objectId;
+
  END IF;
 
 
@@ -80,5 +81,5 @@ WHERE sender.id=senderId;
 			   tx.last_thank_amount_object= lastThankAmountObject
 			   WHERE tx.id= transactionId;
 
- SELECT * from Transaction as tx WHERE tx.id= transactionId;
+ SELECT * from transaction as tx WHERE tx.id= transactionId;
 END

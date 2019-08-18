@@ -15,7 +15,8 @@ public class Channel extends BasicModel {
     @Column(columnDefinition="bigint(20) default 0", insertable = false)
     Long currentObserverAmount;
 
-    @JsonIgnoreProperties({"ownedChannels","channels","receivedTransactions","problemContents" })
+    @JsonIgnoreProperties({"ownedChannels","channels","receivedTransactions","problemContents",
+            "solutionContents", "problemTitles", "solutionTitles", "channels"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
