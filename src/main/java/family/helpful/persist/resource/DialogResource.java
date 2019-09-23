@@ -24,8 +24,8 @@ public class DialogResource {
 
 
     @GetMapping(value = "/contents/{senderID}/{receiverID}/{pageNumber}")
-    public DialogContentMessage  getContentsBySenderAndReceiver(@PathVariable long senderID,
-                                                    @PathVariable long receiverID,
+    public DialogContentMessage  getContentsBySenderAndReceiver(@PathVariable String senderID,
+                                                    @PathVariable String receiverID,
                                                     @PathVariable int pageNumber) {
         Pageable pageWithAmountofElements = PageRequest.of(pageNumber, 10);
 

@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface DialogContentRepository extends JpaRepository<DialogContent, Integer> {
-    @Query("SELECT d FROM DialogContent d WHERE (d.sender.id= ?1 AND d.receiver.id=?2) " +
-            "OR (d.sender.id= ?2 AND d.receiver.id=?1) order by d.createDate DESC")
-    List<DialogContent> findContentsBySenderAndReceiver(Long senderID, Long receiverID, Pageable pageable);
+public interface DialogContentRepository extends JpaRepository<DialogContent, Long> {
+    @Query("SELECT d FROM DialogContent d WHERE (d.sender.username= ?1 AND d.receiver.username=?2) " +
+            "OR (d.sender.username= ?2 AND d.receiver.username=?1) order by d.createDate DESC")
+    List<DialogContent> findContentsBySenderAndReceiver(String senderID, String receiverID, Pageable pageable);
 }

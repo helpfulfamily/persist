@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface SolutionContentRepository extends JpaRepository<SolutionContent, Integer> {
+public interface SolutionContentRepository extends JpaRepository<SolutionContent, Long> {
     @Query("SELECT c FROM SolutionContent c WHERE c.solutionTitle.name = ?1 order by c.currentThankAmount DESC")
     List<SolutionContent> findByTitleWithAmount(String title, Pageable pageable);
 }

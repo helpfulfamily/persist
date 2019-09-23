@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ProblemTitleRepository extends JpaRepository<ProblemTitle, Integer> {
+public interface ProblemTitleRepository extends JpaRepository<ProblemTitle, Long> {
     @Query("SELECT t FROM ProblemTitle t WHERE t.name = ?1")
     ProblemTitle findByName(String name);
     @Query("SELECT s FROM ProblemTitle s ORDER BY s.currentThankAmount DESC")
