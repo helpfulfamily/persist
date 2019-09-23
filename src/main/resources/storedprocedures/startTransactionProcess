@@ -54,6 +54,11 @@ ELSEIF(objectType =  "Channel") THEN
 			 ch.current_thank_amount = @lastThankAmountObject := ch.current_thank_amount+amount
 		WHERE ch.id=objectId;
 
+ELSEIF(objectType =  "ChannelContent") THEN
+
+		 UPDATE channel_content as chc SET
+			 chc.current_thank_amount = @lastThankAmountObject := chc.current_thank_amount+amount
+		WHERE chc.id=objectId;
  END IF;
 
 

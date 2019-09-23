@@ -44,19 +44,19 @@ public class ChannelResource {
         Channel channel = channelRepository.findByName(channelName);
         return channel;
     }
-    @GetMapping(value = "/contents/{name}/{pageNumber}")
-    public ChannelContentMessage getContentsByTitle(@PathVariable String name, @PathVariable int pageNumber) {
+    @GetMapping(value = "/contents/{channelName}/{pageNumber}")
+    public ChannelContentMessage getContentsByTitle(@PathVariable String channelName, @PathVariable int pageNumber) {
         Pageable pageWithAmountofElements = PageRequest.of(pageNumber, 10);
 
         ChannelContentMessage contentMessage= new ChannelContentMessage();
         try {
-            name = java.net.URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+            channelName = java.net.URLDecoder.decode(channelName, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
             // not going to happen - value came from JDK's own StandardCharsets
         }
 
 
-        List<ChannelContent> contentList=  channelContentRepository.findByTitleWithAmount(name, pageWithAmountofElements);
+        List<ChannelContent> contentList=  channelContentRepository.findByTitleWithAmount(channelName, pageWithAmountofElements);
 
         if(contentList!=null){
                 Collections.reverse(contentList);
