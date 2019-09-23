@@ -16,7 +16,6 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessagingException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;

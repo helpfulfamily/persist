@@ -25,6 +25,14 @@ public class  User extends BasicModel {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> receivedTransactions = new ArrayList<>();
 
+    @JsonIgnoreProperties("sender")
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DialogContent> sentDialogContents = new ArrayList<>();
+
+    @JsonIgnoreProperties("receiver")
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DialogContent> receivedDialogContents = new ArrayList<>();
+
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProblemContent> problemContents = new ArrayList<>();
